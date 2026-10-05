@@ -53,12 +53,13 @@ Using R math expressions and with a creative use of parentheses, please show how
 
 ```{r}
 # equals 12
-
+ans <- (4/2) + (2*5)
 
 # equals 5
-
+ans <- 4 / (2 + 2) * 5
 
 # equals 20
+ans <- ((4/2) * 2) * 5
 
 ```
 
@@ -73,8 +74,15 @@ Use R to calculate descriptive statistics (mean, standard deviation, median, min
 Remember to consider whether the variable contains missing values.
 
 ```{r}
-# Calculate descriptive statistics for Life
+# load libraries
+library(tidyverse)
+library(here)
+library(rio)
+library(psych)
 
+# Calculate descriptive statistics for Life
+homework_world <- import('homework-world.csv')
+psych::describe(homework_world %>% select(Life,GDP))
 ```
 
 Now answer the following questions:
@@ -85,6 +93,9 @@ Now answer the following questions:
 
 **Your response:**
 
+1. Mean and median
+2. standard deviation, min, max, range
+3. The mean is less than the median, suggesting outliers on the left side of the distribution, causing a slight skew left.
 
 # Question 3: Visualizing a distribution
 
@@ -93,12 +104,15 @@ Create a histogram of the `Life` variable. Give the graph an informative title a
 ```{r}
 # Create a histogram of Life
 
+hist(homework_world$Life, main = "Distribution of Lifespans", xlab="Age")
+
 ```
 
 Create a boxplot of the same variable.
 
 ```{r}
 # Create a boxplot of Life
+boxplot(homework_world$Life, main = "Boxpot of Lifespans")
 
 ```
 
@@ -112,7 +126,7 @@ Using your graphs and the descriptive statistics you calculated in Question 2, b
 You do not need to comment on every feature if it is not informative for this variable.
 
 **Your response:**
-
+The distribution of lifespans is a left skewed distribution, as the mode is above the median, which is above the mean. This means there are outliers on the low end (left).
 
 # Question 4: Describing a subset
 
@@ -122,7 +136,7 @@ Create a new data frame containing only these countries.
 
 ```{r}
 # Create a data frame containing only second-world countries
-
+second_world <- homework_world %>% filter(World==2)
 ```
 
 For the `Life` variable in this subset:
@@ -134,6 +148,7 @@ For the `Life` variable in this subset:
 ```{r}
 # Calculate descriptive statistics for Life
 # among second-world countries
+psych::describe(second_world$Life)
 
 ```
 
@@ -141,13 +156,13 @@ Create a histogram of `Life` for these countries.
 
 ```{r}
 # Create a histogram
-
+hist(second_world$Life, main="Lifespans among second-world countries", xlab="Age")
 ```
 
 Compare this subset with the full dataset you examined in Questions 2 and 3. What differences, if any, do you notice in the center, variability, or shape of the distributions?
 
 **Your response:**
-
+This distribution appears less skewed (the mean and median are nearly identical), also the mean lifespan is lower, while the spread (standard deviation) is much higher.
 
 # Question 5: Population and sample variance
 
@@ -157,7 +172,7 @@ Create a variable called `X` containing the following values:
 
 ```{r}
 # Create X
-
+X <- c(4, 2, 5, 3, 2, 4, 5, 1, 1, 5)
 ```
 
 Imagine first that these 10 observations constitute the **entire population**.
@@ -168,6 +183,12 @@ Imagine first that these 10 observations constitute the **entire population**.
 
 ```{r}
 # Calculate the population variance
+N <- 10
+mean_x <- mean(X)
+
+sum_sqr_dev <- sum((X-mean_x)**2)
+
+var_x <- sum_sqr_dev / N
 
 ```
 
@@ -177,6 +198,7 @@ Use R's `var()` function to calculate the **sample variance**.
 
 ```{r}
 # Calculate the sample variance
+var(X)
 
 ```
 
@@ -188,7 +210,10 @@ Answer the following questions:
 4. In your own words, why do we use a different denominator when estimating population variance from a sample?
 
 **Your response:**
-
+1. The population variance and sample variance are not the same
+2. The population variance used N=10
+3. The sample variance uses N=10-1=9
+4. We use a different denominator to penalize ourselves for only having a sample. Small sample sizes recieve a relatively larger penalty than large sample sizes.
 
 # Question 6: Putting it together
 
@@ -210,7 +235,14 @@ Your analysis should include:
 
 ```{r}
 # Your analysis
+psych::describe(homework_world$Freedom)
+```
+```{r}
 
+hist(homework_world$Freedom, main = "Distribution of freedom scores", xlab="Freedom score")
 ```
 
+
 **Your response:**
+The freedom scores distrubtion is skewed left, because the mean is less than the median. There are outliers with low freedom scores pulling down the mean.
+
