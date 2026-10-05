@@ -1,0 +1,216 @@
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+---
+title: 'PSY 611 Homework #1'
+author: "YOUR NAME HERE"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Instructions
+
+Please complete this assignment using the RMarkdown file provided. 
+
+Before beginning:
+
+1. Include your name in the preamble above.
+2. Rename the file to include your last name (e.g., `lastname-homework-1.Rmd`).
+3. Complete the questions by adding R code to the code chunks and written responses where requested.
+4. Submit both your completed `.Rmd` file and the knitted output.
+
+You may discuss homework assignments with your classmates; however, the work you submit, including both your R code and written responses, should be your own.
+
+**Data:** Several questions use the dataset referred to as `homework-world`. This dataset is similar to the World Happiness dataset you used in Lab 2 and contains an additional variable called `World`.
+
+So-called "first world" countries (coded 1) are those that were aligned with the United States after World War II (e.g., members of NATO) or were considered to be clearly in the U.S. sphere of influence. "Second world" countries (coded 2) are former members of the Soviet Union or countries considered to have been clearly in the Soviet Union's sphere of influence. "Third world" countries (coded 3) include those considered by the United Nations to be among the least developed countries in the world. The remaining countries are coded 4 for this variable.
+
+
+# Question 1: Getting comfortable with R
+
+This question is about order of operations.
+
+Consider the following expression:
+
+**4 divided by 2 plus 2 times 5**
+
+Using R math expressions and with a creative use of parentheses, please show how this expression can be evaluated to give each of the following answers:
+
+1. 12
+2. 5
+3. 20
+
+```{r}
+# equals 12
+
+
+# equals 5
+
+
+# equals 20
+
+```
+
+
+
+# Question 2: Describing a variable
+
+Let's examine the `Life` and `GDP` variables in the `homework-world` dataset.
+
+Use R to calculate descriptive statistics (mean, standard deviation, median, min, max, range, skew, and kurtosis) for both variables
+
+Remember to consider whether the variable contains missing values.
+
+```{r}
+# Calculate descriptive statistics for Life
+
+```
+
+Now answer the following questions:
+
+1. Which of the statistics you calculated describe **central tendency**?
+2. Which describe **variability**?
+3. Are the mean and median similar or noticeably different? What does their relationship suggest about the distribution?
+
+**Your response:**
+
+
+# Question 3: Visualizing a distribution
+
+Create a histogram of the `Life` variable. Give the graph an informative title and label the x-axis.
+
+```{r}
+# Create a histogram of Life
+
+```
+
+Create a boxplot of the same variable.
+
+```{r}
+# Create a boxplot of Life
+
+```
+
+Using your graphs and the descriptive statistics you calculated in Question 2, briefly describe the distribution of Life. Consider:
+
+- center
+- variability
+- shape
+- potential outliers
+
+You do not need to comment on every feature if it is not informative for this variable.
+
+**Your response:**
+
+
+# Question 4: Describing a subset
+
+Now let's look at only the countries classified as "second world" (`World == 2`).
+
+Create a new data frame containing only these countries.
+
+```{r}
+# Create a data frame containing only second-world countries
+
+```
+
+For the `Life` variable in this subset:
+
+1. Calculate the mean.
+2. Calculate the standard deviation.
+3. Calculate the median.
+
+```{r}
+# Calculate descriptive statistics for Life
+# among second-world countries
+
+```
+
+Create a histogram of `Life` for these countries.
+
+```{r}
+# Create a histogram
+
+```
+
+Compare this subset with the full dataset you examined in Questions 2 and 3. What differences, if any, do you notice in the center, variability, or shape of the distributions?
+
+**Your response:**
+
+
+# Question 5: Population and sample variance
+
+Create a variable called `X` containing the following values:
+
+4, 2, 5, 3, 2, 4, 5, 1, 1, 5
+
+```{r}
+# Create X
+
+```
+
+Imagine first that these 10 observations constitute the **entire population**.
+
+1. Calculate the mean of X.
+2. Calculate the sum of squared deviations from the mean.
+3. Divide this quantity by the population size, N, to calculate the **population variance**.
+
+```{r}
+# Calculate the population variance
+
+```
+
+Now imagine instead that these 10 observations constitute a **sample** from a larger population.
+
+Use R's `var()` function to calculate the **sample variance**.
+
+```{r}
+# Calculate the sample variance
+
+```
+
+Answer the following questions:
+
+1. Are the population variance and sample variance the same?
+2. What denominator did you use for the population variance?
+3. What denominator is used for the sample variance?
+4. In your own words, why do we use a different denominator when estimating population variance from a sample?
+
+**Your response:**
+
+
+# Question 6: Putting it together
+
+Choose **one** of the following variables from the `homework-world` dataset:
+
+- Happiness
+- Support
+- Freedom
+- Generosity
+- Corruption
+
+Use R to investigate its distribution.
+
+Your analysis should include:
+
+1. At least two appropriate measures of central tendency and/or variability.
+2. A histogram or boxplot.
+3. A brief written description of what you learned about the distribution.
+
+```{r}
+# Your analysis
+
+```
+
+**Your response:**
