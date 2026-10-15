@@ -1,0 +1,544 @@
+---
+title: 'Lab 3: Functional Programming'
+output:
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  word_document:
+    toc: yes
+    toc_depth: '3'
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# suppress scientific notation
+options(scipen = 999)
+```
+
+Go ahead and download the .Rmd file on Canvas.
+
+
+# Purpose
+
+In today's lab we will be talking about how functions work. Writing functions is a very fundamental kill in data analysis. Because they're very efficient carrying out your workflow, so you can automate repetitive operations rather than rewriting the same code every time. This saves you time and is good for your computer usage too. 
+
+For example, if we want to compute the power of a vector, instead of manually write code to exponentiate every element, we can simply write a function that runs on the vector.
+
+Meanwhile, because functions are so organized in the way they should be written, it actually helps you structure your thoughts. The process of defining inputs, transformations, and outputs makes your code more logical and easier to follow — and we’ll see some examples of that today.
+
+On a broader level, if you build a function into some R package, then anyone can use your function. That means your work becomes reproducible and sharable.
+
+
+They help with carrying out coding operations in a swift and precise manner. They help to make workflows more dynamic and customized. Once you know how to build your own functions, coding in R becomes easier and you save a lot of time when analyzing data! It's one of those skills which demands tall investments and needs time to grow. However once you reach a certain level of growth the yields are sizable and worth all the investment. 
+
+
+# Why use functions
+
+1. You don't need to reinvent the wheel.
+1. Functions help to organize your thinking into discrete units/operations.
+1. Functions help in organizing your workflow. They reduce errors and help keep a track of complex tasks.
+
+
+# Why build your own functions
+
+1. Functions allow for developing and maintaining algorithms specific to your project. 
+1. Functions support reproducibility. If you build a function and embed it in a R package, anyone who is able to download the package is likely to have access to the function. 
+1. Functions help you better understand how the functions you use are operating, and how to optimize your usage.
+
+
+
+
+# Components of a function
+
+Functions in R have three components:
+
+ * `formals()` - are arguments. They define the inputs that the function takes
+
+ * `body()` - the part inside the curly brackets. It's the command that the function performs
+ 
+ * `environment()` - location of the function, where the function lives, same as where you store your vectors, dataframes.
+ 
+ 
+Let's consider an example of a function. 
+![](`r here::here("labs", "resources", "lab3", "function_components.JPG")` "Components of Function")
+
+
+
+
+Let's run the following code to see how this function works. 
+
+When running functions, you should select the entire chunk of the function. Running one line by one line wouldn't work here.
+```{r, eval=TRUE}
+my_func <- function(vector, power_value){
+        transform_vec <- (vector)^power_value
+        return(transform_vec)
+}
+```
+
+So we can see a function named my_func in the environment now.
+
+Q: Just looking at the formal, how many arguments and what are they for this function?
+A: The two arguments in this function are `vector` and `power_value`. 
+
+Looking at the body, we can see it performs an operation to raise an entire vector to a certain power.
+It stores the result in a new vector called transform_vec.
+
+Importantly, at the end of the function, it returns that transform_vec. RETURN here means output. So the output of this function is a new vector where every element of the input vector has been raised to the power we specified.
+
+
+
+So you can call some commands to get the components manually.
+```{r eval=FALSE}
+#Peeking into the components of the function
+formals(my_func)
+body(my_func)
+environment(my_func)
+```
+
+let's try to use this function. 
+I have a vector called x, and I want to create another vector that contains the squared value of each element in x.
+
+Based on how we defined our my_func earlier, the first argument is the vector itself — so I’ll pass x as the first argument. The second argument is the power — and since we’re taking the square, I’ll set that to 2.
+
+```{r eval=FALSE}
+#A vector x 
+x <- c(5, 9, 8, 10)
+
+#Applying the function to the vector x
+my_func(x, 2) 
+```
+When you run this, you should get each element of x raised to the second power — that is, each number squared.
+
+
+Now let's try to
+# Build an example function
+
+You studied *z-scores* in last week's lab [lab-2](https://uopsych.github.io/psy611/labs/lab-2_instructor.html#z-scores). Recall that they are also called $standardized$ $scores$. The formula to compute *z-scores* is you subtract the mean from the score and then divide by the standard deviation $$ z = \frac{x_i - M}{s} $$ Let's build a function to compute z scores for a vector in R.  
+
+**Step** **1** - identify the input vector
+Because we wanna convert a vector into its z-scored version, our input should be the original vector itself. In the formula above, $x_i$ will be the input vector. So let's just build a random vector `x` for the purpose of this example.  
+```{r eval=FALSE}
+x <- c(5, 9, 8, 10, 14, 18, 19, 24, 35)
+```
+
+**Step** **2** - build the formula, where you compute mean and standard deviation first.
+I will save the values in objects *m* and *s*
+
+```{r eval=FALSE}
+m <- mean(x)
+s <- sd(x)
+```
+
+Now, you can compute the *z-scores*
+```{r eval=FALSE}
+z <- (x - m)/s
+```
+
+At this point you can see that you have all the elements you need to build a function for computing z-scores.  
+
+**Step** **3** - Wrap the objects in a function
+At this stage you create the function object and name the function object. Because all we need for the input is the raw score, we only have one argument.
+```{r eval=FALSE}
+
+z_scores <- function(x){
+                 m <- mean(x)
+                 s <- sd(x)
+                 z <- ((x - m)/s)
+}
+
+
+# z_scores(x)
+```
+
+**Step** **4** - Decide how you want to output the data. We would of course want the output to be our z score, so we'd add a line for the function to return it.
+
+```{r eval=FALSE}
+
+z_scores <- function(x) {
+  m <- mean(x)
+  s <- sd(x)
+  z <- (x - m) / s
+  return(z)
+}
+
+# You can also name your argument differently, for instance I can change my argument as not_z_scored
+z_scores <- function(not_z_scored){
+                 m = mean(not_z_scored)
+                 s = sd(not_z_scored)
+                 z = ((not_z_scored - m)/s)
+               return(z)
+}
+# So it's really your own naming decisions
+
+
+# Now you can also just try to simplify your code more by putting the formula together in one line
+z_scores <- function(not_z_scored){
+  return((not_z_scored-mean(not_z_scored))/sd(not_z_scored))
+}
+
+# We can test if our function works by putting the x vector we just made into this function
+z_scores(x)
+```
+You have a working function! 
+
+**Step** **5** - Testing/Debugging
+Does the function give you the values you expect? Does the function handle all forms of input you are planning on giving it?
+
+```{r eval=FALSE}
+#Are these the values you expect?
+z_scores(x) # yes
+
+# However, what if we pass in only one number? We would expect that the function shouldn't work because if you remember the standard deviation formula for a sample, the denominator is N-1, so if you just have one single value, the computing sd step won't work. We need at least 2 numbers to measure variability. 
+z_scores(2)
+
+#Now what if we pass in a vector that has NA values? does it handle NAs?
+z_scores(c(1,4,5,NA))
+
+#does it handle character vectors?
+z_scores(c('cat', 'dog'))
+
+```
+
+
+Here is one way to handle non-numeric vectors: 
+We can add an if else statement inside the function, telling it that if the vector is not numeric, stop the function and output x is not numeric. If it is, then perform the z-score calculation.
+```{r eval=FALSE}
+z_scores <- function(x){
+  
+    if(!is.numeric(x)) {stop("x is not numeric")}
+                 m = mean(x)
+                 s = sd(x)
+                 z = ((x - m)/s)
+               return(z)
+}
+
+#With numeric vector
+z_scores(x = c(5, 9, 8, 10, 14, 18, 19, 24, 35))
+
+#With character (non-numeric) vector
+z_scores(x= c("apple", "banana"))
+```
+
+`scale` function in the `{base}` package can carry out the same task. 
+
+```{r eval=FALSE}
+library(tidyverse)
+scale(x = c(5, 9, 8, 10, 14, 18, 19, 24, 35)) # You can see that the output from the `scale` function is a matrix. The `z_scores` function, we just built, helps with this issue by returning the output as a numeric vector. When you write your functions you could also specify the formats of your output. It really does make life easier! 
+
+# now you can convert the matrix into a vector by using pipe and as.vector() 
+scale(x = c(5, 9, 8, 10, 14, 18, 19, 24, 35)) %>% as.vector() 
+
+scale(x= c("apple", "banana")) # error: x must be numeric
+```
+
+In some cases, it might be even more useful for your function to return a data frame or a tibble. It really depends on your purpose. You'll learn some examples of that when we study the `{tidyverse}` package in the future. 
+
+**Step** **6** - Make sure your function is well documented for your future self and your readers.
+
+```{r eval=FALSE}
+z_scores <- function(x){
+  #takes a numeric vector and returns the z-scores
+  #input: x: numeric vector
+  #output: vector of z values
+  
+  #gives error message for non-numeric vectors
+  if(!is.numeric(x)) {stop("x is not numeric")}
+  
+    #calculate z scores
+    m = mean(x)
+    s = sd(x)
+    z = ((x - m)/s)
+    
+    
+    return(z)
+}
+
+#this is a one line code that does the same thing, but may run faster (not going to make a noticeable difference here, but in more complex function it might - however, this comes at the cost of being less legible)
+z_score_short <- function(x){
+  return(((x - mean(x))/sd(x)))
+}
+```
+
+***
+
+# Suggestions for writing functions  
+
+Now that you've had some exposure about functions. Here're some practical suggestions. First, it takes time and experience to recognize when writing a function will actually make your workflow easier. 
+
+Second, writing functions is a skill, it takes practice to get comfortable with them, so it's completely ok to take it slow.
+
+It is also important to remember that a function that works better in one project may need to be modified for another project. There is no one right answer to what a good function looks like.   
+
+## When to create functions?
+There're some instances that help you identify it's time to write a function. That include:
+1. When you find yourself repeating or reusing operations in your workflow - e.g., you are copy pasting the same code a lot.
+1. When you want to carry out iterations or simulations - for e.g., you may want to find the mean of a sub sample (subset of the larger sample) and ask R to do this 100 times. 
+1. And just in general, when you want to increase efficiency, readability, or 
+1. When you think this operation will be valuable to others.
+
+
+## Programming tips
+1. Always adds comment and annotate your code, especially if you want people to use your function. For your homework, it's also important to annotate so that both yourself and your readers will understand.
+1. give your functions descriptive and succinct names that reflect what the function is doing.
+1. Break it up into the individual operations, esp. when you first started. Don't try to write a formula all at once. You can always adjust it later. 
+1. Think about what would be the most useful form of input and outputs.
+1. Your function might need a function. so nested functions are fine too!
+1. Always test it. try the function on smaller vectors/values to see whether it is giving the desirable output. However, on the other extreme, try to break your function. So you can strengthen your function by making it more flexible that adapts many cases. E.g., you may want to specify an argument `na.rm` as `TRUE` in certain cases and `FALSE` in others.
+
+
+
+***
+# Let's practice some more examples
+
+**Create a function that multiplies 2 numbers together and divides by a 3rd number (if supplied).**
+I will explain what if supplied means soon. Let's think about input and output first. We wanna convert 3 numbers into one result. That means, input is 3 separate numbers, and output is one. So let's define our three input to be x, y, z 
+```{r eval=FALSE}
+
+test_function <- function(x, y, z) { 
+  return(x * y / z) # now we want it to output... 
+} 
+
+
+
+#test
+test_function(3, 5, 4)
+# now what if I want default of the 3rd argument to be 1? We can just do that inside the argument, so that when we don't provide the 3rd number, it'll just assume z=1. 
+test_function <- function(x, y, z=1) { 
+  return(x * y / z) 
+} 
+test_function(3, 5)
+test_function(x = 3, y = 5)
+test_function(3, 5, 0)
+```
+
+Now I wanna show you an example of a function that takes no input but still produces an output.
+**Write a function to roll one die.**
+There's a function in R called Sample(). It takes in a vector and sample from the vector based on the size you specify.
+Let's look at it first: ?sample
+So x is a vector, which in our case would be 1:6 because we have 6 numbers on our die. size would be another argument, and since we want one number only, it would be 1 
+Think about input and output. Here because of this handy sample command that we'll use in the body, we don't need to input anything. The output would be whatever output from the sample function
+```{r eval=FALSE}
+# hint: ?sample
+roll_a_die <- function(){
+  sample(1:6, size = 1) 
+}
+roll_a_die()
+```
+
+
+**Write a function to roll N dice at once.**
+This time, we want our function to return N random numbers between 1 and 6, instead of just one.
+We're still going to use sample() inside our function. 
+
+But now, we want to roll N dice, and N could be any number. So how does our function know how many dice to roll?
+This is where we need an argument! We can define an argument called n in our function, and then use that n for size inside sample().
+That way, when we call the function, we can tell it how many dice we want to roll by passing in a value for n.
+
+```{r eval=FALSE}
+#Your code here
+roll_N_dice <- function(n){
+  sample(1:6, size = n, replace = TRUE) # replace=TRUE allows the same number to appear more than one time
+}
+# to use the function
+roll_N_dice(5)
+```
+
+
+***
+
+# Minihacks {#minihacks}
+
+## Minihack 1: Components of Function
+This is a function that computes confidence intervals for the mean of a variable. You don't need to know what a confidence interval is at this point (although your function may come in handy later in the term!).
+
+```{r include=TRUE, eval=FALSE}
+mean_ci <- function(x, alpha) {
+  se = sd(x) / sqrt(length(x))
+  return(mean(x) + se * qnorm(c(alpha / 2, 1 - alpha / 2)))
+}
+```
+
+- What are the formals in this function?
+- What is the body of this function?
+- What is the environment of this function?
+
+```{r include=TRUE, eval=FALSE}
+#formals
+formals(mean_ci)
+#body
+body(mean_ci)
+#environment
+environment(mean_ci)
+```
+
+## Minihack 2: Write a function (guided)
+Build a function to estimate the $mean$ of a variable in R. 
+
+$$\mu = \frac{\Sigma_{i=1}^N(x_i)}{N}$$
+  
+  
+  *  First generate a vector `random_var` which takes values from 1 to 10. *Hint*: You can use `cbind` to do this or look up the `seq` function.   
+  *  Build an object vector `col_sum` which contains the sum of all the values in `random_var`.  
+  *  Build an object `col_length` which contains the total number of values in vector `random_var`. *Hint*: Look up `length` function.   
+  *  Build the vector `m` which will contain the mean of all values in vector `random_var`. Hint: use the objects `col_sum` and `col_length` to do this.  
+  *  Now wrap `col_sum`, `col_length` and `m` in a function with one formal: `random_var`. 
+  *  Name this function object as `my_mean`.  
+  *  Compute the mean of `random_var` using the `my_mean` function.   
+  *  Check if it matches the output from the `mean` function in base R.   
+
+```{r eval=FALSE}
+my_mean <- function(random_var) {
+  #Input: 
+  #random_var: a vector of numeric values
+  #Output:
+  #mean
+  #sum of values
+  col_sum <- sum(random_var)
+  #number of values in vector
+  col_length <- length(random_var)
+  #calculate mean
+  m <- col_sum/col_length
+  #return mean
+  return(m)
+}
+#create vector to test with
+random_var <- c(1:10)
+#test
+my_mean(random_var)
+mean(random_var)
+
+
+x <- seq(1, 10) # can also name it as random_var
+my_mean(x) # same as my_mean(seq(1,10))
+```
+
+
+## Minihack 3:  Write a function (hands off)
+
+Sara mentioned $sum$ $of$ $squares$ $(SS)$ in the [class](https://uopsych.github.io/psy611/lectures/04-describing-data.html#/sums-of-squares) last week. Write a function to compute $(SS)$. Build a random vector and test the function. 
+
+```{r eval=FALSE}
+library(tidyverse)
+SS <- function(x) {
+  #takes numeric vector, and returns sum of squares
+  sum_of_sq <- (x - mean(x))^2 %>% #get deviations and square
+    sum() #get sum of squared deviations
+  return(sum_of_sq)
+}
+#test: let's generate some numbers from normal distribution
+potato_weights <- rnorm(10, 1, 1) 
+ 
+SS(potato_weights)
+```
+
+## Minihack 4: Debugging
+Use the `z_scores()` function that we built above for this mini hack. Compute z-scores of the following vector. 
+
+```{r eval=FALSE}
+x <- c(5, 9, 8, 10, 14, 18, NA, 19, 24, 35, NA)
+z_scores(x)
+```
+- Does the function work? Why?
+- Try fixing the bug in this function. Modify the functions so that it ignores NAs, and computes z-scores for all other values in the vector. *Hint* - Look up `?mean` and `?sd`, use the `na.rm` argument. 
+- **BONUS**: add an additional formal, `na.rm` which handles NAs in an appropriate way if set to `TRUE` and gives an error message if set to `FALSE` and there are NAs present. Make sure to test that your function handles vectors with no NAs the same regardless of what `na.rm` is set to. Also, make sure to set a default value for `na.rm`.
+
+
+```{r eval=FALSE}
+# The first approach is to hard-code na.rm=TRUE for the mean and sd commands. This way, our z_scores function will always ignore NAs and compute z-score for the rest numbers.
+z_scores <- function(x){
+    m = mean(x, na.rm = TRUE) # calculate mean on the rest of non-NAs
+    s = sd(x, na.rm = TRUE)
+    z = ((x - m)/s)
+   return(z)
+  }
+z_scores(x)
+
+# A more flexible way to handle this bug is to add an na.rm argument in our z_scores function
+z_scores <- function(x, na.rm = TRUE){
+    m = mean(x, na.rm = na.rm) # calculate mean on the rest of non-NAs
+    s = sd(x, na.rm = na.rm)
+    z = ((x - m)/s)
+   return(z)
+}
+# The na.rm on the left is the name of the argument of the mean() and sd() commands, while the na.rm on the right refers to the value we pass in. So we're simply passing that TRUE into the right side. This makes our function more flexible because we can control how missing values are handled without having to hard-code the mean and sd command.
+# Here we set na.rm = TRUE in our input. This means TRUE is the default value, so if we don't specify anything when calling the function, R will automatically use TRUE. 
+z_scores(x)
+
+# But we can also change it to FALSE when calling the function if we want to. 
+z_scores(x, na.rm = FALSE)
+```
+
+
+
+## Minihack 5: Reading code and lexical scoping (not covered)
+Every time a function runs, it gets its own local workspace. When R needs a variable inside a function, it checks that within that local workspace first. Only if it’s not there does it look outside. Anything created in that local workspace disappears when the function finishes. The only thing that comes out is what's returned by the function.
+
+* Before running it, what do you think this code will output?
+```{r eval=FALSE}
+x <- 1
+strange_function <- function() {
+  x
+}
+strange_function()
+```
+Since there's no x defined inside the function, no argument, no assignment. R looks for it outside the function and finds x = 1. So the output is 1
+
+
+* Before running it, what do you think this code will output?
+```{r eval=FALSE}
+x <- 1
+strange_function <- function(x) {
+  x
+}
+strange_function(2) # 2
+x # 1
+```
+Now we've added x as an argument. When we call strange_function(2), we're passing x=2 into the function, R checks inside the function locally first, finds 2, and stops looking. The outside x is never touched, so it’s still 1. So two different x’s just with the same name
+
+* Before running it, what do you think this code will output?
+```{r eval=FALSE}
+x <- 1
+strange_function <- function(x) {
+  x <- 11
+  x + 3
+}
+x <- 4
+strange_function(5) # 14
+strange_function(10) # 14
+x
+```
+Similar to the previous one we have x as an argument here, but whatever we pass in, whether it's 5 or 10, gets immediately overwritten by x <- 11. Then we calculate and print x + 3, which is 14. So both calls return 14.
+
+The point is: Variables inside a function are generally local to that function. Changing a local variable doesn't automatically change the variable outside. 
+
+* Before running it, what will the output be? What will the value of x be after it runs? 
+```{r eval=FALSE}
+x <- 1
+strange_function <- function(x) {
+  x <- 11
+  x + 3
+  print(x)
+}
+x <- 4
+strange_function(x) # 11
+x <- strange_function(x) 
+x # 11
+```
+We start with x = 4 outside the function and pass this 4 into the function. Inside, we change the local x to 11, calculate x + 3, which is not saved anywhere. Then we print x, which is 11.
+
+Last line: because we wrote x <- strange_function(x), we're assigning that returned value back to the global x outside the function, so our outside, global x also becomes 11.
+
+The key takeaway: Variables inside a function are generally local to that function. Changing a local variable doesn't automatically change the variable outside. But if we explicitly assign the function's returned value to an outside variable, that outside variable will change. I trust that none of you would keep overwriting your variable for no reason, but this is a good reminder to give your variables meaningful names and be intentional when overwriting them. If you don't need to overwrite an existing variable, there's nothing wrong with creating a new one, just so your code is easier to read and you can avoid unnecessary confusion.
+
+
+* See [here](https://adv-r.hadley.nz/functions.html#lexical-scoping) for further explanation.
+
