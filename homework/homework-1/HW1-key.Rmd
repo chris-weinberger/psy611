@@ -126,7 +126,7 @@ Using your graphs and the descriptive statistics you calculated in Question 2, b
 You do not need to comment on every feature if it is not informative for this variable.
 
 **Your response:**
-The distribution of lifespans is a left skewed distribution, as the mode is above the median, which is above the mean. This means there are outliers on the low end (left).
+The distribution of lifespans is a left skewed distribution, as the mode is above the median, which is above the mean. This means there are outliers or a longer tail on the low end (left).
 
 # Question 4: Describing a subset
 
@@ -162,7 +162,7 @@ hist(second_world$Life, main="Lifespans among second-world countries", xlab="Age
 Compare this subset with the full dataset you examined in Questions 2 and 3. What differences, if any, do you notice in the center, variability, or shape of the distributions?
 
 **Your response:**
-This distribution appears less skewed (the mean and median are nearly identical), also the mean lifespan is lower, while the spread (standard deviation) is much higher.
+This distribution appears less skewed (the mean and median are nearly identical), also the mean lifespan among second world countries is higher, while the spread (standard deviation) is much lower.
 
 # Question 5: Population and sample variance
 
