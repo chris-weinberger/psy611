@@ -37,7 +37,7 @@ You may discuss homework assignments with your classmates; however, the work you
 So-called "first world" countries (coded 1) are those that were aligned with the United States after World War II (e.g., members of NATO) or were considered to be clearly in the U.S. sphere of influence. "Second world" countries (coded 2) are former members of the Soviet Union or countries considered to have been clearly in the Soviet Union's sphere of influence. "Third world" countries (coded 3) include those considered by the United Nations to be among the least developed countries in the world. The remaining countries are coded 4 for this variable.
 
 
-# Question 1: Getting comfortable with R
+# Question 1: Getting comfortable with R (2 pts)
 
 This question is about order of operations.
 
@@ -65,7 +65,7 @@ ans <- ((4/2) * 2) * 5
 
 
 
-# Question 2: Describing a variable
+# Question 2: Describing a variable (2 pts)
 
 Let's examine the `Life` and `GDP` variables in the `homework-world` dataset.
 
@@ -97,7 +97,7 @@ Now answer the following questions:
 2. standard deviation, min, max, range
 3. The mean is less than the median, suggesting outliers on the left side of the distribution, causing a slight skew left.
 
-# Question 3: Visualizing a distribution
+# Question 3: Visualizing a distribution (3 pts)
 
 Create a histogram of the `Life` variable. Give the graph an informative title and label the x-axis.
 
@@ -128,7 +128,7 @@ You do not need to comment on every feature if it is not informative for this va
 **Your response:**
 The distribution of lifespans is a left skewed distribution, as the mode is above the median, which is above the mean. This means there are outliers or a longer tail on the low end (left).
 
-# Question 4: Describing a subset
+# Question 4: Describing a subset (3 pts)
 
 Now let's look at only the countries classified as "second world" (`World == 2`).
 
@@ -164,7 +164,7 @@ Compare this subset with the full dataset you examined in Questions 2 and 3. Wha
 **Your response:**
 This distribution appears less skewed (the mean and median are nearly identical), also the mean lifespan among second world countries is higher, while the spread (standard deviation) is much lower.
 
-# Question 5: Population and sample variance
+# Question 5: Population and sample variance (3 pts)
 
 Create a variable called `X` containing the following values:
 
@@ -215,7 +215,7 @@ Answer the following questions:
 3. The sample variance uses N=10-1=9
 4. We use a different denominator to penalize ourselves for only having a sample. Small sample sizes recieve a relatively larger penalty than large sample sizes.
 
-# Question 6: Putting it together
+# Question 6: Putting it together (3 pts)
 
 Choose **one** of the following variables from the `homework-world` dataset:
 
